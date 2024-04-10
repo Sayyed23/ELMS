@@ -61,10 +61,12 @@ namespace ELMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,EmployeeId,NoOfDays,StartDate,EndDate,DurationId,LeaveTypeId,Attachment,Description,StatusId,ApprovedById,ApprovedOn,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] LeaveApplication leaveApplication)
+        public async Task<IActionResult> Create( LeaveApplication leaveApplication)
         {
             if (ModelState.IsValid)
             {
+                leaveApplication.CreatedOn = DateTime.Now;
+                leaveApplication.CreatedById = "Pbl Group 2";
                 _context.Add(leaveApplication);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -99,7 +101,7 @@ namespace ELMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmployeeId,NoOfDays,StartDate,EndDate,DurationId,LeaveTypeId,Attachment,Description,StatusId,ApprovedById,ApprovedOn,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] LeaveApplication leaveApplication)
+        public async Task<IActionResult> Edit(int id, LeaveApplication leaveApplication)
         {
             if (id != leaveApplication.Id)
             {
@@ -110,6 +112,8 @@ namespace ELMS.Controllers
             {
                 try
                 {
+                    leaveApplication.ModifiedOn = DateTime.Now;
+                    leaveApplication.ModifiedById = "Pbl Group 2";
                     _context.Update(leaveApplication);
                     await _context.SaveChangesAsync();
                 }
